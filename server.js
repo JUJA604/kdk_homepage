@@ -21,7 +21,7 @@ app.use('/public', express.static('public'));
 var db;
 // mongodb에 성공적으로 연결이 되었을 때, 3000번의 포트에서 서버 실행이 시작된다.
 // mongoclient.connect('본인링크', function(error, client){서버 실행 코드})의 형태로 이루어진다.
-MongoClient.connect('mongodb+srv://kdk604:home4247@cluster0.4sbjt.mongodb.net/mydata?retryWrites=true&w=majority', function(error, client){
+MongoClient.connect('본인의 몽고db 연결 링크', function(error, client){
     // 에러 처리하는 코드 (error가 발생하면 콘솔창에 error 내용 출력)
     // -이후에 작성하는 에러 제어 코드는 주석을 생략함
     if (error){
