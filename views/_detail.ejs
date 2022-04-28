@@ -1,0 +1,16 @@
+<h4 class="m1-2 my-3" style="text-align : center">기록 페이지</h4>
+<div class="container mt-2">
+<ul class="list-group">
+    <li style="background-color: #E3E2B4;" class="list-group-item">
+      <!-- 글마다 번호를 부여하여, 식별에 간편함을 추가했다. -->
+      <p>No.<%= detail_data._id %></p> 
+      <h4>제목 : <%= detail_data.title %></h4> 
+      <h4>세부 정보 : <%= detail_data.writes %></h4>
+        <a onclick="location.href='/edit/<%= detail_data._id %>'" class="btn btn-warning" data-id="<%= detail_data._id %>" >수정하기</a>
+      <!-- 버튼에도 for문을 활용하여 data-id라는 값에 글의 id를 할당한다. -->
+      <!-- data-원하는이름 의 형태로 활용 가능 -->
+      <button id = "delete" class="btn btn-warning" data-id="<%= detail_data._id %>" style="float: right">삭제</button></br>
+    </li>
+  </ul>
+</div>
+  

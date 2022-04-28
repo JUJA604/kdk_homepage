@@ -1,0 +1,85 @@
+<h4 class="m1-2 my-3" style="text-align : center">기록 저장소</h4>
+<div class="container mt-2">
+<ul class="list-group">
+    <% for (var i = 0; i < posts.length ; i++ ){ %>
+    <li style="background-color: #ffffe3;" class="list-group-item">
+      <!-- 글마다 번호를 부여하여, 식별에 간편함을 추가했다. -->
+      <p>No.<%= posts[i]._id %></p> 
+      <h4>제목 : <%= posts[i].title %></h4> 
+      <!-- 버튼을 클릭하면 상세 페이지로 넘어가도록 설계 -->
+      <a onclick="location.href='detail/<%= posts[i]._id %>'" class="btn btn-warning" data-id="<%= posts[i]._id %>" >더보기</a>
+      <!-- 버튼에도 for문을 활용하여 data-id라는 값에 글의 id를 할당한다. -->
+      <!-- data-원하는이름 의 형태로 활용 가능 -->
+      <button id = "delete" class="btn btn-warning" style="float: right" data-id="<%= posts[i]._id %>" >삭제</button>
+    </li>
+  <% } %>
+  </ul>
+</div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+  <script>
+      // 클릭한 요소의 id 값을 
+    $('#delete').click(function(e){
+      // e.target은 클릭한 요소를 의미함
+      // dataset.id는 data-id를 의미함
+      var D_button = e.target.dataset.id;
+      // var clicks = $(this);
+
+      // ajax 요청, method, url, data의 값들을 가진 JSON 자료형을 넣는다.
+      $.ajax({
+      // 사용할 html 요청을 적는 곳
+      method : 'DELETE',
+      // 요청할 경로
+      url : '/delete',
+      // 어떤 데이터를 html 요청할지 작성
+      data : {_id : D_button }
+      // ajax 요청이 끝나면 실행될 코드들
+    }).done(function(result){
+      console.log('기록이 삭제 되었습니다.');
+      // 삭제 버튼을 누르면 페이지가 새로고침 된다.
+      window.location.reload();
+      // 삭제 버튼을 누르면 해당 게시물이 표시된 li 태그를 숨긴다.
+      // clicks.parent('li').fadeOut();
+
+      // 요청이 실패했을 때 실행할 코드를 작성
+      // textStatus는 응답 코드, errorThrown는 에러 메세지를 의미함.
+    }).fail(function(xhr, textStatus, errorThrown){
+      console.log(xhr, textStatus, errorThrown)
+    });
+    });
+
+        // 클릭한 요소의 id 값을 
+        $('#details').click(function(e){
+      // e.target은 클릭한 요소를 의미함
+      // dataset.id는 data-id를 의미함
+      var Detail_B = e.target.dataset.id;
+      // var clicks = $(this);
+
+      // ajax 요청, method, url, data의 값들을 가진 JSON 자료형을 넣는다.
+      $.ajax({
+      // 사용할 html 요청을 적는 곳
+      method : 'GET',
+      // 요청할 경로
+      url : '/detail',
+      // 어떤 데이터를 html 요청할지 작성
+      data : {_id : Detail_B }
+      // ajax 요청이 끝나면 실행될 코드들
+    }).done(function(result){
+      console.log('기록이 삭제 되었습니다.');
+      // 삭제 버튼을 누르면 페이지가 새로고침 된다.
+      window.location.reload();
+      // 삭제 버튼을 누르면 해당 게시물이 표시된 li 태그를 숨긴다.
+      // clicks.parent('li').fadeOut();
+
+      // 요청이 실패했을 때 실행할 코드를 작성
+      // textStatus는 응답 코드, errorThrown는 에러 메세지를 의미함.
+    }).fail(function(xhr, textStatus, errorThrown){
+      console.log(xhr, textStatus, errorThrown)
+    });
+    });
+
+
+
+
+  </script>

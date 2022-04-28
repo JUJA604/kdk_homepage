@@ -1,0 +1,28 @@
+findOne 함수 사용법
+
+(name : title 이라던지) 에 해당하는 값을 result에 담고, 그 result를 res.render 함수의 2번째 파라미터로 json 형태로 입력한다.
+
+예)
+( name : title은 예시이다. name이라는 키의 값이 title인 데이터를 가져오겠다는 의미이다. )
+( watch.ejs 파일 내에서 test라는 이름으로 findOne으로 가져온 값을 쓸 수 있다. )
+
+database.collection('컬렉션 이름').findOne({ name : title }, function(error, result){
+    실핼 할 코드
+    res.render('watch.ejs', { test : result })
+})
+
+req.params 설명
+
+
+
+Jquery 선택자
+
+$("*") 모든 요소
+$(".class") 지정한 클래스를 가지는 요소 선택
+$("태그명") 해당 태그의 이름을 가진 요소 선택
+$("#id") 지정한 id를 가진 요소 선택
+$("A,B") 다수의 요소 선택
+
+    db.collection('post').updateOne({_id : },{ $set : {할일 : , 분야 : , 추가정보: }}, function(error, result){
+
+    })

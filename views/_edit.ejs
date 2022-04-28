@@ -1,0 +1,20 @@
+<h4 class="m1-2 my-3" style="text-align : center">기록 페이지</h4>
+<div class="container mt-2">
+  <form action="/edit?_method=PUT" method="POST">
+      <div class="form-group">
+        <label for="exampleFormControlInput1">할 일</label>
+        <!-- value에 post_E에 있는 _id를 넣는다. -->
+        <!-- id는 변하지 않는 값이기 때문에 id로 데이터를 식별해야한다. -->
+        <!-- 그렇기 때문에 form 태그 안에 있는 input 태그에 post_E._id (해당 데이터의 id)를 숨기고, 서버에 전송을 한다. -->
+        <input type="text" value="<%= post_E._id %>" name="id" style="display: none;">
+        
+        <!-- value 값에 post_E.title을 입력하면, input 태그 안에 post_E.title이 작성이 된 상태로 페이지에 들어갈 수 있다. -->
+        <input value="<%= post_E.title %>" type="text" class="form-control" name="title">
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">추가 정보</label>
+        <input value="<%= post_E.writes %>" type="text" class="form-control" name="date" size=10></input>
+      </div>
+      <button type="submit" class="btn btn-warning">저장</button>
+    </form>
+  </div>
