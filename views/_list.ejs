@@ -1,0 +1,89 @@
+<!-- 페이지의 이름을 띄워준다. -->
+<h4 class="m1-2 my-3" style="text-align : center">기록 저장소</h4>
+<div class="alert alert-warning" role="alert">
+ 기록을 추가하려면 누르세요
+  <button type="button" style="float: right; margin: -7px;" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">기록 추가</button>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  
+</nav>
+
+
+
+<!-- Button trigger modal -->
+
+
+<!-- 모달창을 만들어서 기록을 추가하는 기능을 넣음 -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <h4 class="m1-2 my-3" style="text-align : center">기록 추가</h4>
+      <div class="container mt-2">
+        <form action="/save" method="POST">
+            <div class="form-group">
+              <label for="exampleFormControlInput1">제목</label>
+              <input type="text" class="form-control" name="title" placeholder="해야 할 일을 작성하십시오" required/>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">추가 정보</label>
+              <textarea type="text" class="form-control" name="date" rows="3" placeholder="할 일에 대한 부가적인 설명을 작성하십시오" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-warning" >저장</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-2">
+<ul class="list-group">
+    <% for (var i = 0; i < posts.length ; i++ ){ %>
+    <li style="background-color: #ffffe3;" class="list-group-item">
+      <!-- 글마다 번호를 부여하여, 식별에 간편함을 추가했다. -->
+      <h6>No.<%= posts[i]._id %></h6>
+      <h4>제목 : <%= posts[i].title %></h4> 
+      <!-- 버튼을 클릭하면 상세 페이지로 넘어가도록 설계 -->
+      <a onclick="location.href='detail/<%= posts[i]._id %>'" class="btn btn-warning">더보기</a>
+      <!-- 버튼에도 for문을 활용하여 data-id라는 값에 글의 id를 할당한다. -->
+      <!-- data-원하는이름 의 형태로 활용 가능 -->
+      <button class="delete btn btn-warning" style="float: right" data-number="<%= posts[i]._id %>" >삭제</button>
+    </li>
+  <% } %>
+  </ul>
+</div>
+ 
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+
+  <script>
+    // 클릭한 요소의 id 값에 해당하는 데이터를 삭제 요청한다
+    $('.delete').click(function(e){
+
+    // Deletes 라는 변수에 클릭된 버튼의 data-number 값을 입력한다.
+    var Deletes = e.target.dataset.number;
+
+      // delete ajax 요청하는 부분
+      $.ajax({
+      // 어떤 html 요청을 할 것인지 입력
+      method : 'DELETE',
+      // 요청할 경로를 입력
+      url : '/delete',
+      // 어떤 데이터를 ajax 요청할 것인지 고름
+      // (여기서는 방금 클릭한 버튼의 _id 값을 가진 데이터를 고름)
+      data : { _id : Deletes }
+    }).done(function(result){
+      // 삭제가 완료되면 실행될 코드
+      window.location.reload();
+    }).fail(function(xhr, textStatus, errorThrown){
+      // 삭제에 실패하면 실행될 코드
+      console.log(xhr, textStatus, errorThrown)
+    })
+    });
+  </script>

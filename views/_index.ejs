@@ -1,0 +1,95 @@
+<h4 class="m1-2 my-3" style="text-align : center">바로가기</h4>
+<div class="alert alert-warning" role="alert">
+ 바로가기를 추가하려면 누르세요
+ <button type="button" style="float: right; margin: -7px;" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">바로가기 추가</button>
+</div>
+
+
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <h4 class="m1-2 my-3" style="text-align : center">바로가기 추가</h4>
+      <div class="container mt-2">
+        <form action="/save2" method="POST">
+            <div class="form-group">
+              <label for="exampleFormControlInput1"> 바로가기 이름</label>
+              <input type="text" class="form-control" name="f_title" placeholder="바로가기의 이름을 입력하세요"  required/>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlInput1"> 바로가기 url</label>
+              <input type="text" class="form-control" name="f_url" placeholder="추가할 바로가기의 링크를 입력하세요"  required/>
+            </div>
+            <div>           
+            <button type="submit" class="btn btn-warning">저장</button>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row row-cols-1 row-cols-md-6" >
+  <% for (var i = 0; i < favorite_D.length ; i++ ){ %>
+    <div class="col mb-4">
+        <div style="background-color: #D1DFE8;"class="card">
+          <img onclick="window.open('<%= favorite_D[i].urls %>')"src="http://www.google.com/s2/favicons?domain=<%= favorite_D[i].urls %>" style="margin : 10px; margin-left: auto; margin-right: auto; display: block; height: 50px; width: 50px;" class="card-img-top" alt="...">
+          <div class="card-body">
+                  <!-- 바로가기의 이름을 나타낸다. -->
+            <h4 class="mb-1"><%= favorite_D[i].favorite_Ns %></h4>
+            <!-- 버튼을 클릭하면 등록한 url이 새창에서 열린다. -->
+            <a></a>
+            <!-- 바로가기의 id를 확인해서 버튼을 누를시에 바로가기가 삭제된다. -->
+           <button class="delete btn btn-warning" style="float: right" data-ids="<%= favorite_D[i]._id %>" >삭제</button>
+          </div>
+        </div>
+      </div>
+
+  <% } %>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+
+  <script>
+      // 클릭한 요소의 id 값을 
+    $('.delete').click(function(e){
+      console.log(e)
+      // e.target은 클릭한 요소를 의미함
+      // dataset.id는 data-id를 의미함
+      var F_button = e.target.dataset.ids;
+
+      // ajax 요청, method, url, data의 값들을 가진 JSON 자료형을 넣는다.
+      $.ajax({
+      // 사용할 html 요청을 적는 곳
+      method : 'DELETE',
+      // 요청할 경로
+      url : '/F_delete',
+      // 어떤 데이터를 html 요청할지 작성
+      data : {_id : F_button }
+      // ajax 요청이 끝나면 실행될 코드들
+    }).done(function(result){
+      window.location.reload();
+      console.log('기록이 삭제 되었습니다.');
+      // 삭제 버튼을 누르면 페이지가 새로고침 된다.
+      
+      // 요청이 실패했을 때 실행할 코드를 작성
+      // textStatus는 응답 코드, errorThrown는 에러 메세지를 의미함.
+    }).fail(function(xhr, textStatus, errorThrown){
+      console.log(xhr, textStatus, errorThrown)
+    });
+    });
+
+
+  </script>
